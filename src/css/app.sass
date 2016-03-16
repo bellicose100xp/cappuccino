@@ -6,3 +6,25 @@
 
 .my-head
   font-size: 5vw
+
+.food-list-container
+  width: 100%
+  display: flex
+  flex-flow: row wrap
+  justify-content: space-around
+  align-items: flex-start
+
+.food-item-container
+  width: 48%
+  height: 25vw
+  background-color: lightgrey
+  margin: 1vw 0
+  display: flex
+  justify-content: center
+  align-items: center
+  &:empty
+    height: 0
+
+.food-item
+  color: white
+  font-size: 2vw
