@@ -1,8 +1,9 @@
 import {WINDOW_RESIZE} from '../constants/constants'
 
+
 export default (state = {
-    width: 300,
-    height: 200
+    width: window.innerWidth,
+    height: window.innerHeight
 }, action) => {
     switch (action.type) {
         case WINDOW_RESIZE:

@@ -1,5 +1,6 @@
 $phone: "only screen and (max-width : 800px)"
 $uhd: "only screen and (min-width : 2000px)"
+
 .main-container
   width: 100%
   display: flex
@@ -20,7 +21,7 @@ $uhd: "only screen and (min-width : 2000px)"
   width: 300px
   height: 200px
   background-color: lightgrey
-  margin: 1vw 0
+  margin: 5px 0
   display: flex
   justify-content: center
   align-items: center
@@ -29,22 +30,7 @@ $uhd: "only screen and (min-width : 2000px)"
 
 .food-item
   color: white
-  font-size: 3vw
+  font-size: 30px
 
-//@media #{$phone}
-
-  .my-head
-    font-size: 10vw
-
-  .food-item-container
-    width: 100%
-    height: 50vw
-
-  .food-item
-    font-size: 8vw
-
-//@media #{$uhd}
-
-  .food-item-container
-    width: 33%
-    height: 20vW
+@media #{$phone}
+  font-size: 50px
