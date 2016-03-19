@@ -8,15 +8,17 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {Provider} from 'react-redux'
 import store from './store/store'
-import {Router, Route, Link, browserHistory} from 'react-router'
+import {IndexRoute, Router, Route, Link, browserHistory} from 'react-router'
 
-import App from './components/app'
+import App from './app'
+import Homepage from './components/homepage'
 import InputForm from './components/inputForm'
 
 ReactDOM.render(
     <Provider store={store}>
         <Router history={browserHistory}>
             <Route path="/" component={App}>
+                <IndexRoute component={Homepage}/>
                 <Route path="data" component={InputForm}/>
             </Route>
 
