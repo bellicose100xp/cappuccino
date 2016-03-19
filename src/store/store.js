@@ -2,11 +2,13 @@
 
 import thunkMiddleware from  'redux-thunk'
 import createLogger from 'redux-logger'
-const loggerMiddleware = createLogger();
 import {createStore, combineReducers, applyMiddleware} from 'redux'
+import windowResizeReducer from '../reducers/windowResizeReducer'
+
+const loggerMiddleware = createLogger();
 
 const rootReducer = combineReducers({
-    //reducer list here
+    windowResizeReducer
 });
 
 const createStoreWithMiddleware = applyMiddleware(

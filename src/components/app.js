@@ -1,15 +1,44 @@
 import React from 'react'
+import {connect} from 'react-redux'
+import {windowResizeAction} from '../actionCreators/actionCreators'
 
-export default class App extends React.Component{
-    constructor(){
-        super()
+const mapStateToProps = state => {
+    return {
+        width: state.windowResizeReducer.width,
+        height: state.windowResizeReducer.height
     }
-    
-    componentDidMount = () => {
-        
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        handleWindowResizeEvent: (w, h) => {
+            dispatch(windowResizeAction(w, h))
+        }
+    }
+};
+
+class App extends React.Component {
+    constructor() {
+        super();
+        console.log(this.props);
+    }
+
+    resizeEventListenerFunction = () => {
+        let {innerWidth, innerHeight} = window;
+        this.props.handleWindowResizeEvent(innerWidth, innerHeight);
     };
-    
+
+
+    componentDidMount = () => {
+        window.addEventListener('resize',this.resizeEventListenerFunction)
+    };
+
+    componentWillUnmount = () => {
+        window.removeEventListener('resize', resizeEventListenerFunction)
+    };
+
     render = () => {
+        console.log(this.props);
         return (
             <div className="main-container">
                 <div className="my-head">Cappuccino Cat</div>
@@ -66,3 +95,5 @@ export default class App extends React.Component{
         )
     }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
