@@ -1,41 +1,61 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {addRecipesAction} from '../actionCreators/firebaseActions'
 
-let InputForm = () => {
-    let recipeTitle;
-    let recipeDescription;
+let InputForm = ({dispatch}) => {
+    let recipe = {};
+
+    const handleSubmit = event => {
+
+        const recipeToAdd = ({
+            title: recipe.title.value,
+            description: recipe.description.value
+        });
+
+        event.preventDefault();
+        dispatch(addRecipesAction(recipeToAdd));
+
+        recipe.title.value ='';
+        recipe.description.value = '';
+    };
 
     return (
         <div className="container form-div">
-        <form>
-            <div className="form-group">
-                <label htmlFor="recipeTitle">Recipe Title</label>
-                <input
-                    name="recipeTitle"
-                    id="recipeTitle"
-                    type="text"
-                    className="form-control"
-                    ref={node => {recipeTitle = node}}
-                    placeholder="Enter Recipe Title"
-                />
-            </div>
+            <form>
+                <div className="form-group">
+                    <label htmlFor="recipeTitle">Recipe Title</label>
+                    <input
+                        name="title"
+                        id="title"
+                        type="text"
+                        className="form-control"
+                        ref={node => {recipe.title = node}}
+                        placeholder="Enter Recipe Title"
+                    />
+                </div>
 
-            <div className="form-group">
-                <label htmlFor="recipeTitle">Recipe Title</label>
+                <div className="form-group">
+                    <label htmlFor="recipeTitle">Recipe Title</label>
                 <textarea
-                    name="recipeDescription"
-                    id="recipeDescription"
+                    name="description"
+                    id="description"
                     type="text"
                     className="form-control"
-                    ref={node => {recipeDescription = node}}
+                    ref={node => {recipe.description = node}}
                     placeholder="Enter Recipe Description"
                 />
-            </div>
+                </div>
 
-            <button type="submit">Submit</button>
+                <button
+                    className="btn btn-primary"
+                    type="submit"
+                    onClick={handleSubmit}
+                >
+                    Submit
+                </button>
 
-        </form>
-    </div>
+            </form>
+        </div>
     )
 };
 
