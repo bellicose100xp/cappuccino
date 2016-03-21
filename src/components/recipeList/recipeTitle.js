@@ -9,7 +9,7 @@ let mapStateToProps = state => {
 };
 
 const RecipeTitle = ({allRecipeTitles}) => {
-    console.log(allRecipeTitles);
+   
     return (
         <div className="container">
             <table className="table table-striped table-responsive">
@@ -22,7 +22,7 @@ const RecipeTitle = ({allRecipeTitles}) => {
                 <tbody>
                 {allRecipeTitles.map(recipe => (
                     <RecipeTitleRow
-                        key={recipe.key}
+                        key={recipe.id}
                         {...recipe}
                     />
                 ))}

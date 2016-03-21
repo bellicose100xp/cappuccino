@@ -1,11 +1,12 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router'
 
-const RecipeTitleRow = ({key, title, description}) => {
+const RecipeTitleRow = ({id, title, description}) => {
   return (
-      <tr key={key}>
+      <tr>
           <td>
-              {title}              
+            <Link to={`/recipe/${id}`}>{title}</Link>
           </td>
           <td>
               {description}

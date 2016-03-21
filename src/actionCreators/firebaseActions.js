@@ -12,20 +12,10 @@ import store from '../store/store';
 
 const ref = new Firebase(FIREBASE_URL_NO_JSON);
 
-export const addRecipesAction = recipe => dispatch =>
-    fetch(FIREBASE_URL, {
-        method: 'post',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(recipe)
-    });
-
 const convertToArray = data => {
     for (let key in data) {
         if (data.hasOwnProperty(key)) {
-            data[key].key = key;
+            data[key].id = key;
         }
     }
     return _.values(data);
@@ -50,3 +40,23 @@ export const requestAllRecipes = () => dispatch =>
                 dataAsArray
             })
         });
+
+export const addRecipesAction = recipe => dispatch =>
+    fetch(FIREBASE_URL, {
+        method: 'post',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(recipe)
+    });
+
+export const addRecipesDetailAction = (recipeDetails, pathInfo) => dispatch =>
+    fetch(FIREBASE_URL, {
+        method: 'post',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(recipeDetails)
+    });

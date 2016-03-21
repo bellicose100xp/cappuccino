@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {addRecipesAction} from '../actionCreators/firebaseActions'
+import {addRecipesAction} from '../../actionCreators/firebaseActions'
 
 let InputForm = ({dispatch}) => {
     let recipe = {};
@@ -23,7 +23,7 @@ let InputForm = ({dispatch}) => {
         <div className="container form-div">
             <form>
                 <div className="form-group">
-                    <label htmlFor="recipeTitle">Recipe Title</label>
+                    <label htmlFor="title">Recipe Title</label>
                     <input
                         name="title"
                         id="title"
@@ -35,7 +35,7 @@ let InputForm = ({dispatch}) => {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="recipeTitle">Recipe Title</label>
+                    <label htmlFor="description">Recipe Title</label>
                 <textarea
                     name="description"
                     id="description"
