@@ -1,14 +1,14 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {addRecipeInfoAction} from '../../actionCreators/firebaseActions'
+import {addRecipeInfoAction} from '../../../actionCreators/firebaseActions'
+import {INGREDIENTS} from '../../../constants/constants'
 
 let IngredientInputForm = ({id, dispatch}) => {
     //console.log('ingredient', id);
     let ingredient = {};
-
-    let pathInfo = {
+    const pathInfo = {
         id,
-        name: 'ingredients'
+        name: INGREDIENTS
     };
 
     const handleSubmit = event => {

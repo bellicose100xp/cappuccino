@@ -6,7 +6,7 @@ const RecipeTitleRow = ({id, title, description}) => {
   return (
       <tr>
           <td>
-            <Link to={`/recipe/${id}`}>{title}</Link>
+            <Link to={`/recipes/${id}`}>{title}</Link>
           </td>
           <td>
               {description}

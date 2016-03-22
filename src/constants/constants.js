@@ -9,3 +9,4 @@ export const UPDATE_CHILD_ITEMS_FROM_SERVER = 'UPDATE_CHILD_ITEMS_FROM_SERVER';
 
 //PathInfo
 export const INGREDIENTS = 'ingredients';
+export const DIRECTIONS = 'directions';

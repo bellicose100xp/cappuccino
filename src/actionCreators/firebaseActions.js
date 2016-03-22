@@ -5,7 +5,7 @@ import {
     FIREBASE_URL,
     FIREBASE_URL_NO_JSON,
     UPDATE_RECIPES_FROM_SERVER,
-UPDATE_CHILD_ITEMS_FROM_SERVER
+    UPDATE_CHILD_ITEMS_FROM_SERVER
 } from '../constants/constants'
 import _ from 'lodash'
 import Firebase from 'firebase';
@@ -25,7 +25,7 @@ const convertToArray = data => {
 // it fires once in the beginning and then every time there's a change
 ref.on('value', snapshot => {
     const dataAsArray = convertToArray(snapshot.val());
-  //  console.log(dataAsArray);
+    //  console.log(dataAsArray);
     store.dispatch({
         type: UPDATE_RECIPES_FROM_SERVER,
         dataAsArray
@@ -36,7 +36,7 @@ export const getChildItems = pathInfo => dispatch => {
     const childRef = new Firebase(`${FIREBASE_URL_NO_JSON}${pathInfo.id}/${pathInfo.name}/`);
     childRef.once('value', function (snapshot) {
         const dataAsArray = convertToArray(snapshot.val());
-     //   console.log('inside getChildItem Actions...',dataAsArray);
+        //   console.log('inside getChildItem Actions...',dataAsArray);
         dispatch({
             type: UPDATE_CHILD_ITEMS_FROM_SERVER,
             dataAsArray,
@@ -56,14 +56,14 @@ export const getChildItems = pathInfo => dispatch => {
 //             })
 //         });
 
-// nothing to 'dispatch' here so the second param dispatch is empty.
+// pathInfo must be {id, name}, where name is name of route after _key
 export const addRecipeInfoAction = (itemToAdd, pathInfo) => dispatch => {
-    
+
     // if the info we are adding it is part of recipe then add the info the path specified
-    let FIREBASE_URL_TO_ADD = pathInfo ?
+    let firebaseUrlToAdd = pathInfo ?
         `${FIREBASE_URL_NO_JSON}${pathInfo.id}/${pathInfo.name}.json` : FIREBASE_URL;
-    
-    return fetch(FIREBASE_URL_TO_ADD, {
+
+    return fetch(firebaseUrlToAdd, {
         method: 'post',
         headers: {
             'Accept': 'application/json',
@@ -72,8 +72,27 @@ export const addRecipeInfoAction = (itemToAdd, pathInfo) => dispatch => {
         body: JSON.stringify(itemToAdd)
     })
         .then(res => res.json())
-        .then(data => {
-            console.log('inside addRecipeInfoAction...', data);
+        .then(() => {
             dispatch(getChildItems(pathInfo))
+        })
+        .catch(err => {
+            console.log('add request failed: ', err);
+        });
+};
+
+//
+export const modifyRecipeInfoAction = (id, keyToModify, valueToModifyTo, path) => dispatch => {
+    let firebaseUrlToModify = path ?
+        `${FIREBASE_URL_NO_JSON}${path}/${id}.json` : `${FIREBASE_URL_NO_JSON}${id}.json`;
+
+    fetch(firebaseUrlToModify, {
+        method: 'PATCH',
+        body: JSON.stringify({
+            [keyToModify]: valueToModifyTo
+        })
+    })
+        .then(res => res.json())
+        .catch(err => {
+            console.log('patch request failed: ', err);
         });
 };

@@ -12,20 +12,18 @@ import {IndexRoute, Router, Route, Link, browserHistory} from 'react-router'
 
 import App from './app'
 import Homepage from './components/homepage'
-import InputForm from './components/recipeList/inputForm'
-import RecipeTitle from './components/recipeList/recipeTitle'
 import RecipeInputAndTitle from './components/recipeList/inputAndTitleList'
-import Ingredient from './components/ingredientList/ingredientInputAndTitleList'
+import Ingredient from './components/recipeDetails/receipeDetailsController'
+import Directions from './components/recipeDetails/directions/directions'
 
 ReactDOM.render(
     <Provider store={store}>
         <Router history={browserHistory}>
             <Route path="/" component={App}>
                 <IndexRoute component={Homepage}/>
-                <Route path="data" component={InputForm}/>
-                <Route path="recipes" component={RecipeTitle}/>
-                <Route path="input" component={RecipeInputAndTitle}/>
-                <Route path="/recipe/:recipeId" component={Ingredient}/>
+                <Route path="recipes" component={RecipeInputAndTitle}/>
+                <Route path="recipes/:recipeId" component={Ingredient}/>
+                <Route path="directions" component={Directions}/>
             </Route>
         </Router>
     </Provider>,
