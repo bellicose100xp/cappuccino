@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import IngredientTitleRow from './ingredientTitleRow'
+import {INGREDIENTS} from '../../../constants/constants'
 
 let mapStateToProps = (state, ownProps) => {
     let allIngredients = [];
@@ -22,7 +23,11 @@ let mapStateToProps = (state, ownProps) => {
     }
 };
 
-const IngredientsTitles = ({allIngredients}) => {
+const IngredientsTitles = ({id, allIngredients}) => {
+    let pathInfo = {
+        id,
+        name: INGREDIENTS
+    };
 
     return (
         <div className="container">
@@ -30,6 +35,7 @@ const IngredientsTitles = ({allIngredients}) => {
                 <thead>
                 <tr>
                     <th>Ingredient Name</th>
+                    <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -37,6 +43,7 @@ const IngredientsTitles = ({allIngredients}) => {
                     <IngredientTitleRow
                         key={ingredient.id}
                         {...ingredient}
+                        pathInfo={pathInfo}
                     />
                 ))}
                 </tbody>

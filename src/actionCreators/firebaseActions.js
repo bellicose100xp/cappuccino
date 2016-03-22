@@ -73,7 +73,7 @@ export const addRecipeInfoAction = (itemToAdd, pathInfo) => dispatch => {
     })
         .then(res => res.json())
         .then(() => {
-            dispatch(getChildItems(pathInfo))
+            if(pathInfo) dispatch(getChildItems(pathInfo));
         })
         .catch(err => {
             console.log('add request failed: ', err);
@@ -81,9 +81,9 @@ export const addRecipeInfoAction = (itemToAdd, pathInfo) => dispatch => {
 };
 
 //
-export const modifyRecipeInfoAction = (id, keyToModify, valueToModifyTo, path) => dispatch => {
-    let firebaseUrlToModify = path ?
-        `${FIREBASE_URL_NO_JSON}${path}/${id}.json` : `${FIREBASE_URL_NO_JSON}${id}.json`;
+export const modifyRecipeInfoAction = (id, keyToModify, valueToModifyTo, pathInfo) => dispatch => {
+    let firebaseUrlToModify = pathInfo ?
+        `${FIREBASE_URL_NO_JSON}${pathInfo.id}/${pathInfo.name}/${id}.json` : `${FIREBASE_URL_NO_JSON}${id}.json`;
 
     fetch(firebaseUrlToModify, {
         method: 'PATCH',
@@ -92,6 +92,25 @@ export const modifyRecipeInfoAction = (id, keyToModify, valueToModifyTo, path) =
         })
     })
         .then(res => res.json())
+        .then(() => {
+            if(pathInfo) dispatch(getChildItems(pathInfo));
+        })
+        .catch(err => {
+            console.log('patch request failed: ', err);
+        });
+};
+
+export const deleteRecipeInfoAction = (id, pathInfo) => dispatch => {
+    let firebaseUrlToModify = pathInfo ?
+        `${FIREBASE_URL_NO_JSON}${pathInfo.id}/${pathInfo.name}/${id}.json` : `${FIREBASE_URL_NO_JSON}${id}.json`;
+
+    fetch(firebaseUrlToModify, {
+        method: 'DELETE'
+    })
+        .then(res => res.json())
+        .then(() => {
+            if(pathInfo) dispatch(getChildItems(pathInfo));
+        })
         .catch(err => {
             console.log('patch request failed: ', err);
         });

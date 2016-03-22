@@ -11,7 +11,7 @@ import store from './store/store'
 import {IndexRoute, Router, Route, Link, browserHistory} from 'react-router'
 
 import App from './app'
-import Homepage from './components/homepage'
+import Homepage from './components/homepage/homepage'
 import RecipeInputAndTitle from './components/recipeList/inputAndTitleList'
 import Ingredient from './components/recipeDetails/receipeDetailsController'
 import Directions from './components/recipeDetails/directions/directions'

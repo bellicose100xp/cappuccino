@@ -17,6 +17,7 @@ const RecipeTitle = ({allRecipeTitles}) => {
                     <tr>
                         <th>Title</th>
                         <th>Description</th>
+                        <th>Delete</th>
                     </tr>
                </thead>
                 <tbody>

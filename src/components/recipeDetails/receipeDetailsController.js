@@ -37,13 +37,16 @@ class RecipeInputAndTitle extends React.Component {
         };
 
         dispatch(getChildItems(pathInfo));
-
     };
 
     render = () => {
 
         let {id, directions} = this.props;
-        //  console.log(id);
+        
+        let pathInfo = {
+            id,
+            name: INGREDIENTS
+        };
 
         return (
             <div>

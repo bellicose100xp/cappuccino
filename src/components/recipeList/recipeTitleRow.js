@@ -1,8 +1,15 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router'
+import {deleteRecipeInfoAction} from '../../actionCreators/firebaseActions'
 
-const RecipeTitleRow = ({id, title, description}) => {
+const RecipeTitleRow = ({id, title, description, dispatch}) => {
+
+    let handleDelete = event => {
+        event.preventDefault();
+        dispatch(deleteRecipeInfoAction(id));
+    };
+
   return (
       <tr>
           <td>
@@ -10,6 +17,14 @@ const RecipeTitleRow = ({id, title, description}) => {
           </td>
           <td>
               {description}
+          </td>
+          <td>
+              <button
+                  className="btn btn-danger"
+                  onClick={handleDelete}
+              >
+                  Delete
+              </button>
           </td>
       </tr>
   )  
