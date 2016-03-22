@@ -5,12 +5,14 @@ import createLogger from 'redux-logger'
 import {createStore, combineReducers, applyMiddleware, compose} from 'redux'
 import windowResizeReducer from '../reducers/windowResizeReducer'
 import recipes from '../reducers/updateRecipeReducer'
+import childItems from '../reducers/childItemReducer'
 
 const loggerMiddleware = createLogger();
 
 const rootReducer = combineReducers({
     windowResizeReducer,
-    recipes
+    recipes,
+    childItems
 });
 
 const configureStore = initialState => {

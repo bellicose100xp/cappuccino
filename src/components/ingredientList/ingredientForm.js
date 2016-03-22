@@ -1,25 +1,24 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {} from '../../actionCreators/firebaseActions'
+import {addRecipeInfoAction} from '../../actionCreators/firebaseActions'
 
-function mapStateToProps(state, ownProps) {
-    return {
-        id: ownProps.params.recipeId
-    }
-}
-
-let IngredientInputForm = ({id, filter, dispatch}) => {
-    console.log('ingredient', id);
+let IngredientInputForm = ({id, dispatch}) => {
+    //console.log('ingredient', id);
     let ingredient = {};
+
+    let pathInfo = {
+        id,
+        name: 'ingredients'
+    };
 
     const handleSubmit = event => {
         event.preventDefault();
 
-        const recipeToAdd = ({
+        const ingredientToAdd = ({
             name: ingredient.name.value
         });
 
-      //  dispatch(addRecipesAction(recipeToAdd));
+       dispatch(addRecipeInfoAction(ingredientToAdd, pathInfo));
 
         ingredient.name.value = '';
     };
@@ -52,4 +51,4 @@ let IngredientInputForm = ({id, filter, dispatch}) => {
     )
 };
 
-export default connect(mapStateToProps)(IngredientInputForm);
+export default connect()(IngredientInputForm);

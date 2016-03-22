@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {addRecipesAction} from '../../actionCreators/firebaseActions'
+import {addRecipeInfoAction} from '../../actionCreators/firebaseActions'
 
 let InputForm = ({dispatch}) => {
     let recipe = {};
@@ -13,7 +13,7 @@ let InputForm = ({dispatch}) => {
         });
 
         event.preventDefault();
-        dispatch(addRecipesAction(recipeToAdd));
+        dispatch(addRecipeInfoAction(recipeToAdd));
 
         recipe.title.value ='';
         recipe.description.value = '';

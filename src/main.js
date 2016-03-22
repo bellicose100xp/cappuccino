@@ -15,7 +15,7 @@ import Homepage from './components/homepage'
 import InputForm from './components/recipeList/inputForm'
 import RecipeTitle from './components/recipeList/recipeTitle'
 import RecipeInputAndTitle from './components/recipeList/inputAndTitleList'
-import IngredientInoutForm from './components/ingredientList/ingredientForm'
+import Ingredient from './components/ingredientList/ingredientInputAndTitleList'
 
 ReactDOM.render(
     <Provider store={store}>
@@ -25,7 +25,7 @@ ReactDOM.render(
                 <Route path="data" component={InputForm}/>
                 <Route path="recipes" component={RecipeTitle}/>
                 <Route path="input" component={RecipeInputAndTitle}/>
-                <Route path="/recipe/:recipeId" component={IngredientInoutForm}/>
+                <Route path="/recipe/:recipeId" component={Ingredient}/>
             </Route>
         </Router>
     </Provider>,
