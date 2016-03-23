@@ -1,12 +1,12 @@
 import React from 'react'
 import {connect} from 'react-redux'
 
-const RecipeBlock = ({foodItemContainerStyle, title}) => {
+const RecipeBlock = ({foodItemContainerStyle, title, imageUrl}) => {
 
-    let image_name = title.replace(' ', '_');
+   // let image_name = title.replace(' ', '_');
 
     let calculatedStyle = Object.assign({}, foodItemContainerStyle,{
-        backgroundImage: `url(./images/${image_name}.jpg)`
+        backgroundImage: `url(${imageUrl})`
     });
 
     return (
