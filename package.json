@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server",
-    "deploy": "webpack -p && firebase deploy",
+    "deploy": "webpack --config webpack.prod.config.js --progress -p && firebase deploy",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
