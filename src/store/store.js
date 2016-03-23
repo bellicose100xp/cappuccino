@@ -6,13 +6,15 @@ import {createStore, combineReducers, applyMiddleware, compose} from 'redux'
 import windowResizeReducer from '../reducers/windowResizeReducer'
 import recipes from '../reducers/updateRecipeReducer'
 import childItems from '../reducers/childItemReducer'
+import editRecipe from '../reducers/editRecipeReducer'
 
 const loggerMiddleware = createLogger();
 
 const rootReducer = combineReducers({
     windowResizeReducer,
     recipes,
-    childItems
+    childItems,
+    editRecipe
 });
 
 const configureStore = initialState => {

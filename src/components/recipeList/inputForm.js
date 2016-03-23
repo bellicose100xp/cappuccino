@@ -1,123 +1,127 @@
+import '../utils/amazon'
 import React from 'react'
 import {connect} from 'react-redux'
-import {addRecipeInfoAction} from '../../actionCreators/firebaseActions'
+import {addRecipeInfoAction, modifyRecipeInfoAction} from '../../actionCreators/firebaseActions'
+import {doneEditRecipe} from '../../actionCreators/actionCreators'
+import Title from './formElements/inputTitle'
+import Description from './formElements/inputDescription'
+import ImageUpload from './formElements/imageUploadForm'
+import _ from 'lodash'
 
-let InputForm = ({dispatch}) => {
-        let recipe = {};
-        let imageToUpload, results;
+const mapStateToProps = state => {
+    return {
+        recipeToEdit: state.editRecipe
+    }
+};
 
-        const callAddRecipeInfoAction = () => {
+let InputForm = ({recipeToEdit, dispatch}) => {
+    let recipe = {}, imageToUpload, results;
+    let modify = !_.isEmpty(recipeToEdit);
+    let defaultImage = 'https://buggys3.s3-us-west-2.amazonaws.com/grey_image.png';
 
-            const recipeToAdd = ({
-                title: recipe.title.value,
-                description: recipe.description.value,
-                imageUrl: recipe.imageUrl
-            });
+    // set timeout is to make sure the component is loaded
+    setTimeout(() => {
+        if(modify) {
+            recipe.title.value = recipeToEdit.title;
+            recipe.description.value = recipeToEdit.description;
+        }
+    },0);
 
-            dispatch(addRecipeInfoAction(recipeToAdd));
+    const clearFields = () => {
+        recipe.title.value = '';
+        recipe.description.value = '';
+        imageToUpload.value = '';
+    };
 
-            recipe.title.value = '';
-            recipe.description.value = '';
-            imageToUpload.value = '';
-        };
+    const callAddModifyRecipeInfoAction = () => {
 
-        //Secret key amazon
-        AWS.config.update({
-            accessKeyId: 'AKIAI3M7MD34JEI4CB5Q',
-            secretAccessKey: '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'
+        let recipeToAdd = ({
+            title: recipe.title.value,
+            description: recipe.description.value,
+            imageUrl: recipe.imageUrl || recipeToEdit.imageUrl || defaultImage
         });
 
-        // this is required
-        AWS.config.region = 'us-west-2';
+        //add or modify
+        if (recipeToEdit.id) {
+            dispatch(modifyRecipeInfoAction(recipeToEdit.id, null, null, null, recipeToAdd))
+        } else {
+            dispatch(addRecipeInfoAction(recipeToAdd));
+        }
 
-        const bucket = new AWS.S3({params: {Bucket: 'buggys3'}});
+       clearFields();
+    };
 
-        const handleImageUpload = () => {
-            let file = imageToUpload.files[0];
-            if (file) {
-                results.innerHTML = '';
-                var params = {
-                    ACL: 'public-read-write',
-                    StorageClass: "REDUCED_REDUNDANCY",
-                    Key: file.name,
-                    ContentType: file.type,
-                    Body: file
-                };
-                bucket.upload(params, function (err, data) {
-                    if (err) {
-                        console.log('upload error', err);
-                        results.innerHTML = 'Upload Error, Contact Admin';
-                    } else {
-                        recipe.imageUrl = data.Location;
-                        callAddRecipeInfoAction();
-                    }
+    const bucket = new AWS.S3({params: {Bucket: 'buggys3'}});
 
-                });
+    const handleImageUpload = () => {
+        let file = imageToUpload.files[0];
+        if (file) {
+            results.innerHTML = '';
+            var params = {
+                ACL: 'public-read-write',
+                StorageClass: "REDUCED_REDUNDANCY",
+                Key: file.name,
+                ContentType: file.type,
+                Body: file
+            };
+            bucket.upload(params, function (err, data) {
+                if (err) {
+                    console.log('upload error', err);
+                    results.innerHTML = 'Upload Error, Contact Admin';
+                } else {
+                    recipe.imageUrl = data.Location;
+                    callAddModifyRecipeInfoAction();
+                }
+            });
+        } else {
+            if (recipeToEdit) {
+                callAddModifyRecipeInfoAction();
             } else {
-                results.innerHTML = 'Nothing to upload.';
+                results.innerHTML = 'Image not present, default image will be used';
+                setTimeout(() => { results.innerHTML = ''}, 3000);
+                callAddModifyRecipeInfoAction();
             }
-        };
+        }
+    };
 
-        const handleSubmit = event => {
-            event.preventDefault();
-            handleImageUpload();
-        };
+    const handleSubmit = event => {
+        event.preventDefault();
+        handleImageUpload();
+    };
 
-        return (
-            <div className="container form-div">
-                <form>
-                    <div className="form-group">
-                        <label htmlFor="title">Recipe Title</label>
-                        <input
-                            name="title"
-                            id="title"
-                            type="text"
-                            className="form-control"
-                            ref={node => {recipe.title = node}}
-                            placeholder="Enter Recipe Title"
-                        />
-                    </div>
+    const handleCancelEdit = event => {
+        event.preventDefault();
+        dispatch(doneEditRecipe());
+        clearFields();
+    };
 
-                    <div className="form-group">
-                        <label htmlFor="description">Recipe Title</label>
-                <textarea
-                    name="description"
-                    id="description"
-                    type="text"
-                    className="form-control"
-                    ref={node => {recipe.description = node}}
-                    placeholder="Enter Recipe Description"
+    return (
+        <div className="container form-div">
+            <form>
+                <Title handleRef={node => {recipe.title = node}}/>
+                <Description handleRef={node => {recipe.description = node}}/>
+                <ImageUpload
+                    handleImageRef={node => {imageToUpload = node}}
+                    handleResultRef={node => {results = node}}
                 />
-                    </div>
 
-                    <div className="form-group">
-                        <label htmlFor="file-chooser">Upload Recipe Image</label>
-                        <input
-                            className="btn btn-default"
-                            type="file"
-                            id="file-chooser"
-                            ref={node => {imageToUpload = node}}
-                        />
+                <button
+                    className="btn btn-primary"
+                    type="submit"
+                    onClick={handleSubmit}
+                > {modify ? 'Modify' : 'Submit'}
+                </button>
 
-                        <div
-                            id="results"
-                            className="help-block"
-                            ref={node => {results = node}}
-                        ></div>
-                    </div>
-
+                {modify ?
                     <button
-                        className="btn btn-primary"
-                        type="submit"
-                        onClick={handleSubmit}
-                    >
-                        Submit
-                    </button>
+                        className="btn btn-default"
+                        onClick={handleCancelEdit}
+                    > Cancel
+                    </button>  : null
+                }
+            </form>
+        </div>
+    )
+};
 
-                </form>
-            </div>
-        )
-    }
-    ;
-
-export default connect()(InputForm);
+export default connect(mapStateToProps)(InputForm);

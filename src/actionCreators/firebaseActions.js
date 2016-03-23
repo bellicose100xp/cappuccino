@@ -7,6 +7,7 @@ import {
     UPDATE_RECIPES_FROM_SERVER,
     UPDATE_CHILD_ITEMS_FROM_SERVER
 } from '../constants/constants'
+import {doneEditRecipe} from './actionCreators'
 import _ from 'lodash'
 import Firebase from 'firebase';
 import store from '../store/store';
@@ -81,22 +82,26 @@ export const addRecipeInfoAction = (itemToAdd, pathInfo) => dispatch => {
 };
 
 //
-export const modifyRecipeInfoAction = (id, keyToModify, valueToModifyTo, pathInfo) => dispatch => {
+export const modifyRecipeInfoAction = (id, keyToModify, valueToModifyTo, pathInfo, keyValueSet) => dispatch => {
     let firebaseUrlToModify = pathInfo ?
         `${FIREBASE_URL_NO_JSON}${pathInfo.id}/${pathInfo.name}/${id}.json` : `${FIREBASE_URL_NO_JSON}${id}.json`;
-
+    
+    let keyValue = keyValueSet || {[keyToModify]: valueToModifyTo};
+    
     fetch(firebaseUrlToModify, {
         method: 'PATCH',
         body: JSON.stringify({
-            [keyToModify]: valueToModifyTo
+            ...keyValue
         })
     })
         .then(res => res.json())
         .then(() => {
             if(pathInfo) dispatch(getChildItems(pathInfo));
+            dispatch(doneEditRecipe);
         })
         .catch(err => {
             console.log('patch request failed: ', err);
+            dispatch(doneEditRecipe);
         });
 };
 

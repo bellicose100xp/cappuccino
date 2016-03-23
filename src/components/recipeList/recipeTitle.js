@@ -17,6 +17,7 @@ const RecipeTitle = ({allRecipeTitles}) => {
                     <tr>
                         <th>Title</th>
                         <th>Description</th>
+                        <th>Edit</th>
                         <th>Delete</th>
                     </tr>
                </thead>
@@ -24,7 +25,7 @@ const RecipeTitle = ({allRecipeTitles}) => {
                 {allRecipeTitles.map(recipe => (
                     <RecipeTitleRow
                         key={recipe.id}
-                        {...recipe}
+                        recipe={recipe}
                     />
                 ))}
                 </tbody>

@@ -2,12 +2,18 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router'
 import {deleteRecipeInfoAction} from '../../actionCreators/firebaseActions'
+import {editRecipe} from '../../actionCreators/actionCreators'
 
-const RecipeTitleRow = ({id, title, description, dispatch}) => {
-
+const RecipeTitleRow = ({recipe, dispatch}) => {
+    let {id, title, description} = recipe;
     let handleDelete = event => {
         event.preventDefault();
         dispatch(deleteRecipeInfoAction(id));
+    };
+    
+    let handleEdit = event => {
+        event.preventDefault();
+        dispatch(editRecipe(recipe));
     };
 
   return (
@@ -20,10 +26,14 @@ const RecipeTitleRow = ({id, title, description, dispatch}) => {
           </td>
           <td>
               <button
+                  className="btn btn-info"
+                  onClick={handleEdit}> Edit
+              </button>
+          </td>
+          <td>
+              <button
                   className="btn btn-danger"
-                  onClick={handleDelete}
-              >
-                  Delete
+                  onClick={handleDelete}> Delete
               </button>
           </td>
       </tr>

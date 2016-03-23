@@ -66,7 +66,7 @@ class RecipeList extends React.Component {
         
         let foodItemContainerStyle = {
             backgroundRepeat: 'no-repeat',
-            backgroundSize: '100%',
+            backgroundSize: 'cover',
             width: elemWidth,
             height: elemHeight
         };
@@ -88,13 +88,13 @@ class RecipeList extends React.Component {
                         />
                     })}
 
-                    {Array.from(Array(blocksPerRow - 1).keys()).map(id => {
+                    {blocksPerRow > 1 ? Array.from(Array(blocksPerRow - 1).keys()).map(id => {
                         return <div
                             key={id}
                             className="food-item-container"
                             style={emptyFoodItemContainerStyle}>
                         </div>
-                    })}
+                    }) : null}
 
                 </div>
             </div>

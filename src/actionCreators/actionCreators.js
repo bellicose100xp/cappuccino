@@ -1,5 +1,7 @@
 import {
-    WINDOW_RESIZE
+    WINDOW_RESIZE,
+    EDIT_RECIPE,
+    DONE_EDIT_RECIPE
 } from '../constants/constants'
 
 export const windowResizeAction = (width, height) => {
@@ -7,5 +9,18 @@ export const windowResizeAction = (width, height) => {
         type: WINDOW_RESIZE,
         width,
         height
+    }
+};
+
+export const editRecipe = recipe => {
+    return {
+        type: EDIT_RECIPE,
+        recipe: recipe
+    }
+};
+
+export const doneEditRecipe = () => {
+    return {
+        type: DONE_EDIT_RECIPE
     }
 };

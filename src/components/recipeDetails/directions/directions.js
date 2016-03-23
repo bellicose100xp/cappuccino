@@ -7,7 +7,7 @@ import {DIRECTIONS} from '../../../constants/constants'
 const Directions = ({id, directions, dispatch}) => {
         let directionsData;
         let previewNode;
-        // this is to make sure the component is mounted
+        // this is to make sure the component is mounted before this is run
         setTimeout(() => {directionsData.value = directions},0);
         const handleSubmit = event => {
             event.preventDefault();
@@ -50,6 +50,6 @@ const Directions = ({id, directions, dispatch}) => {
                 </div>
             </div>
         )
-    }
+    };
 
 export default connect()(Directions);
