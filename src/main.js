@@ -15,6 +15,10 @@ import Homepage from './components/homepage/homepage'
 import RecipeInputAndTitle from './components/recipeList/inputAndTitleList'
 import Ingredient from './components/recipeDetails/receipeDetailsController'
 import Directions from './components/recipeDetails/directions/directions'
+import Content from './components/content/content'
+
+
+//console.log(process.env.NODE_ENV);
 
 ReactDOM.render(
     <Provider store={store}>
@@ -24,6 +28,7 @@ ReactDOM.render(
                 <Route path="recipes" component={RecipeInputAndTitle}/>
                 <Route path="recipes/:recipeId" component={Ingredient}/>
                 <Route path="directions" component={Directions}/>
+                <Route path="/:recipeId" component={Content}/>
             </Route>
         </Router>
     </Provider>,

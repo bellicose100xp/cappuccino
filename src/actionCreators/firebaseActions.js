@@ -11,17 +11,9 @@ import {doneEditRecipe} from './actionCreators'
 import _ from 'lodash'
 import Firebase from 'firebase';
 import store from '../store/store';
+import convertToArray from '../components/utils/convertToArray'
 
 const ref = new Firebase(FIREBASE_URL_NO_JSON);
-
-const convertToArray = data => {
-    for (let key in data) {
-        if (data.hasOwnProperty(key)) {
-            data[key].id = key;
-        }
-    }
-    return _.values(data);
-};
 
 // it fires once in the beginning and then every time there's a change
 ref.on('value', snapshot => {

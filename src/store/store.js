@@ -1,14 +1,14 @@
 // import reducers
 
 import thunkMiddleware from  'redux-thunk'
-import createLogger from 'redux-logger'
+//import createLogger from 'redux-logger'
 import {createStore, combineReducers, applyMiddleware, compose} from 'redux'
 import windowResizeReducer from '../reducers/windowResizeReducer'
 import recipes from '../reducers/updateRecipeReducer'
 import childItems from '../reducers/childItemReducer'
 import editRecipe from '../reducers/editRecipeReducer'
 
-const loggerMiddleware = createLogger();
+//const loggerMiddleware = createLogger();
 
 const rootReducer = combineReducers({
     windowResizeReducer,
@@ -20,8 +20,7 @@ const rootReducer = combineReducers({
 const configureStore = initialState => {
     return createStore(rootReducer, initialState, compose(
         applyMiddleware(
-            thunkMiddleware,
-            loggerMiddleware
+            thunkMiddleware
         ),
         window.devToolsExtension ? window.devToolsExtension() : f => f
     ));
