@@ -96,7 +96,7 @@ let InputForm = ({recipeToEdit, dispatch}) => {
     };
 
     return (
-        <div className="container form-div">
+        <div className="form-div">
             <form>
                 <Title handleRef={node => {recipe.title = node}}/>
                 <Description handleRef={node => {recipe.description = node}}/>
@@ -106,7 +106,7 @@ let InputForm = ({recipeToEdit, dispatch}) => {
                 />
 
                 <button
-                    className="btn btn-primary"
+                    className="btn btn-primary margin-right-submit"
                     type="submit"
                     onClick={handleSubmit}
                 > {modify ? 'Modify' : 'Submit'}

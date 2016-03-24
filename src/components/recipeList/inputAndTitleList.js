@@ -7,7 +7,7 @@ import InputForm from './inputForm'
 import RecipeTitle from './recipeTitle'
 
 let RecipeInputAndTitle = () => (
-    <div>
+    <div className="main-container">
         <InputForm />
         <RecipeTitle />
     </div>

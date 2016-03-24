@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router'
 import {deleteRecipeInfoAction} from '../../actionCreators/firebaseActions'
 import {editRecipe} from '../../actionCreators/actionCreators'
+import classNames from 'classnames'
 
 const RecipeTitleRow = ({recipe, dispatch}) => {
     let {id, title, description} = recipe;
@@ -16,6 +17,18 @@ const RecipeTitleRow = ({recipe, dispatch}) => {
         dispatch(editRecipe(recipe));
     };
 
+    let btnClassInfo = classNames({
+        'btn': true,
+        'btn-info': true,
+        'btn-sm': window.innerWidth < 600
+    });
+
+    let btnClassDanger = classNames({
+        'btn': true,
+        'btn-danger': true,
+        'btn-sm': window.innerWidth < 600
+    });
+
   return (
       <tr>
           <td>
@@ -26,13 +39,13 @@ const RecipeTitleRow = ({recipe, dispatch}) => {
           </td>
           <td>
               <button
-                  className="btn btn-info"
+                  className={btnClassInfo}
                   onClick={handleEdit}> Edit
               </button>
           </td>
           <td>
               <button
-                  className="btn btn-danger"
+                  className={btnClassDanger}
                   onClick={handleDelete}> Delete
               </button>
           </td>

@@ -1,5 +1,6 @@
 import 'babel-polyfill'
 import 'isomorphic-fetch'
+//import 'aws-sdk'
 
 import './css/bootstrap.css'
 import './css/app.sass'

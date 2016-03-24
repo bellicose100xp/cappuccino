@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import RecipeTitleRow from './recipeTitleRow'
+import classNames from 'classnames'
 
 let mapStateToProps = state => {
     return {
@@ -9,12 +10,24 @@ let mapStateToProps = state => {
 };
 
 const RecipeTitle = ({allRecipeTitles}) => {
-   
+   // console.log(window.innerWidth)
+    let tableClass = classNames({
+        'table': true,
+        'table-striped': true,
+        'table-responsive': true,
+        'table-hover': true,
+        'table-condensed': window.innerWidth < 600
+    });
+    
+
     return (
-        <div className="container">
-            <table className="table table-striped table-responsive">
+        <div className="form-div">
+            <table
+                className={tableClass}
+                style={{marginTop: '10px'}}
+            >
                 <thead>
-                    <tr>
+                    <tr style={{borderTop: '1px solid lightgrey'}}>
                         <th>Title</th>
                         <th>Description</th>
                         <th>Edit</th>
@@ -30,7 +43,7 @@ const RecipeTitle = ({allRecipeTitles}) => {
                 ))}
                 </tbody>
             </table>
-        </div>
+        </div> 
     )
 };
 
