@@ -40,13 +40,16 @@ const Content = ({recipe}) => {
                             <div className="panel panel-default">
                                 <div className="panel-heading">Ingredients</div>
                                 <div className="panel-body">
-                                    <ul>
+                                    <div className="ingredient-items">
                                         {ingredientsArray.map(item => {
-                                            return <li key={item.id}>
+                                            return <div
+                                                className="ingredient-item"
+                                                key={item.id}
+                                            >
                                                 {item.name}
-                                            </li>
+                                            </div>
                                         })}
-                                    </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>

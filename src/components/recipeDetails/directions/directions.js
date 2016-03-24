@@ -8,17 +8,22 @@ const Directions = ({id, directions, dispatch}) => {
         let directionsData;
         let previewNode;
         // this is to make sure the component is mounted before this is run
-        setTimeout(() => {directionsData.value = directions},0);
+        setTimeout(() => {
+            directionsData.value = directions;
+            previewNode.innerHTML = convertParaToOrderedList(directionsData.value);
+        },0);
+
         const handleSubmit = event => {
             event.preventDefault();
             dispatch(modifyRecipeInfoAction(id, DIRECTIONS, directionsData.value));
             console.log();
         };
+
         let changeHandler = () => {
             previewNode.innerHTML = convertParaToOrderedList(directionsData.value);
         };
         return (
-            <div className="container form-div">
+            <div className="form-div">
                 <form>
                     <div className="form-group">
                         <label htmlFor="directions">Directions:</label>
@@ -34,7 +39,7 @@ const Directions = ({id, directions, dispatch}) => {
                     </div>
 
                     <button
-                        className="btn btn-primary"
+                        className="btn btn-primary margin-bottom-button"
                         type="submit"
                         onClick={handleSubmit}
                     >

@@ -34,7 +34,7 @@ const RecipeTitleRow = ({recipe, dispatch}) => {
           <td>
             <Link to={`/recipes/${id}`}>{title}</Link>
           </td>
-          <td>
+          <td style={{width: '60%'}}>
               {description}
           </td>
           <td>

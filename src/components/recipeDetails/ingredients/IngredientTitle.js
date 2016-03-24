@@ -30,7 +30,7 @@ const IngredientsTitles = ({id, allIngredients}) => {
     };
 
     return (
-        <div className="container">
+        <div className="form-div">
             <table className="table table-striped table-responsive">
                 <thead>
                 <tr>

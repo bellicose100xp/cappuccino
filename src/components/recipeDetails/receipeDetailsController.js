@@ -49,7 +49,7 @@ class RecipeInputAndTitle extends React.Component {
         };
 
         return (
-            <div>
+            <div className="main-container">
                 <IngredientForm id={id}/>
                 <IngredientTitle id={id}/>
                 <Directions id={id} directions={directions}/>

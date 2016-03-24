@@ -24,7 +24,7 @@ let IngredientInputForm = ({id, dispatch}) => {
     };
 
     return (
-        <div className="container form-div">
+        <div className="form-div">
             <form>
                 <div className="form-group">
                     <label htmlFor="ingredient">Recipe Title</label>
@@ -39,7 +39,7 @@ let IngredientInputForm = ({id, dispatch}) => {
                 </div>
 
                 <button
-                    className="btn btn-primary"
+                    className="btn btn-primary margin-bottom-button"
                     type="submit"
                     onClick={handleSubmit}
                 >
