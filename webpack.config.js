@@ -1,4 +1,5 @@
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: './src/main.js',
@@ -13,7 +14,12 @@ module.exports = {
         historyApiFallback: true
     },
     plugins: [
+        new CopyWebpackPlugin([
+            {from: 'src/index.html', to: 'index.html'},
+            {from: 'src/images/favicon.ico', to: 'favicon.ico'}
+        ]),
         new ExtractTextPlugin("styles.css")
+
     ],
     module: {
         loaders: [

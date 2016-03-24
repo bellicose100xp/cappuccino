@@ -11,31 +11,57 @@ const mapStateToprops = (state, ownProps) => {
 
 const Content = ({recipe}) => {
     // if block is so we eliminate the error in case the receipe hasn't loaded
+
     if (recipe) {
         let directionsDivRef;
         const {title, description, directions, imageUrl, ingredients} = recipe;
         let ingredientsArray = convertToArray(ingredients);
-      //  console.log('content..', directions);
+        //  console.log('content..', directions);
         setTimeout(() => {
             directionsDivRef.innerHTML = paraToList(directions || '')
-        },0);
+        }, 0);
 
         return (
-            <div className="container-fluid">
+            <div className="main-container">
 
-                <h1 className="row">{title}</h1>
+                <div className="my-recipe-title">{title}</div>
 
-                <p className="row">{description}</p>
+                <div className="my-recipe-description">{description}</div>
 
-                <ul>
-                    {ingredientsArray.map(item => {
-                        return <li key={item.id}>
-                                {item.name}
-                        </li>
-                    })}
-                </ul>
-                <img src={imageUrl} style={{width:320, height:240}}/>
-                <div className="row" ref={node => directionsDivRef = node}> </div>
+                <div className="hero-list-direction">
+                    <div
+                        className="hero-image"
+                        style={{backgroundImage: `url(${imageUrl})`}}>
+
+                    </div>
+
+                    <div className="list-direction">
+                        <div className="ingredients">
+                            <div className="panel panel-default">
+                                <div className="panel-heading">Ingredients</div>
+                                <div className="panel-body">
+                                    <ul>
+                                        {ingredientsArray.map(item => {
+                                            return <li key={item.id}>
+                                                {item.name}
+                                            </li>
+                                        })}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="directions">
+                            <div className="panel panel-default">
+                                <div className="panel-heading">Directions</div>
+                                <div className="panel-body" ref={node => directionsDivRef = node}></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
         )
     }
