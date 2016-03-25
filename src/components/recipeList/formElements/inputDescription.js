@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 const Description = ({handleRef}) => {
     return (
         <div className="form-group">
-            <label htmlFor="description">Recipe Title</label>
+            <label htmlFor="description">Recipe Description</label>
                         <textarea
                             name="description"
                             id="description"

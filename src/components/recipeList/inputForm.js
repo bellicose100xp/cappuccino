@@ -7,6 +7,7 @@ import Title from './formElements/inputTitle'
 import Description from './formElements/inputDescription'
 import ImageUpload from './formElements/imageUploadForm'
 import _ from 'lodash'
+import notie from 'notie'
 
 const mapStateToProps = state => {
     return {
@@ -17,15 +18,16 @@ const mapStateToProps = state => {
 let InputForm = ({recipeToEdit, dispatch}) => {
     let recipe = {}, imageToUpload, results;
     let modify = !_.isEmpty(recipeToEdit);
+    let validationStatus = false;
     let defaultImage = 'https://buggys3.s3-us-west-2.amazonaws.com/grey_image.png';
 
     // set timeout is to make sure the component is loaded
     setTimeout(() => {
-        if(modify) {
+        if (modify) {
             recipe.title.value = recipeToEdit.title;
             recipe.description.value = recipeToEdit.description;
         }
-    },0);
+    }, 0);
 
     const clearFields = () => {
         recipe.title.value = '';
@@ -48,7 +50,7 @@ let InputForm = ({recipeToEdit, dispatch}) => {
             dispatch(addRecipeInfoAction(recipeToAdd));
         }
 
-       clearFields();
+        clearFields();
     };
 
     const bucket = new AWS.S3({params: {Bucket: 'buggys3'}});
@@ -78,15 +80,33 @@ let InputForm = ({recipeToEdit, dispatch}) => {
                 callAddModifyRecipeInfoAction();
             } else {
                 results.innerHTML = 'Image not present, default image will be used';
-                setTimeout(() => { results.innerHTML = ''}, 3000);
+
+                setTimeout(() => {
+                    results.innerHTML = ''
+                }, 3000);
                 callAddModifyRecipeInfoAction();
             }
         }
     };
 
+    async function handleValidation() {
+
+        if (!recipe.title.value) {
+            notie.alert(3, "Recipe Title is required!", 2.5);
+            return
+        }
+
+        validationStatus = true
+    }
+
     const handleSubmit = event => {
         event.preventDefault();
-        handleImageUpload();
+        handleValidation();
+
+        if (validationStatus) {
+            handleImageUpload();
+            validationStatus = false;
+        }
     };
 
     const handleCancelEdit = event => {
@@ -117,7 +137,7 @@ let InputForm = ({recipeToEdit, dispatch}) => {
                         className="btn btn-default"
                         onClick={handleCancelEdit}
                     > Cancel
-                    </button>  : null
+                    </button> : null
                 }
             </form>
         </div>
