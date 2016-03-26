@@ -15,6 +15,7 @@ const RecipeTitleRow = ({recipe, dispatch}) => {
     let handleEdit = event => {
         event.preventDefault();
         dispatch(editRecipe(recipe));
+        window.scrollTo(0,0) //scroll to top
     };
 
     let btnClassInfo = classNames({

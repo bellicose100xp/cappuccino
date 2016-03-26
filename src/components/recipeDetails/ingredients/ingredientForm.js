@@ -2,38 +2,35 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {addRecipeInfoAction} from '../../../actionCreators/firebaseActions'
 import {INGREDIENTS} from '../../../constants/constants'
-import notie from 'notie'
+import notie from '../../../lib/notie'
 
 let IngredientInputForm = ({id, dispatch}) => {
     //console.log('ingredient', id);
     let ingredient = {};
-    let validationStatus = false;
     const pathInfo = {
         id,
         name: INGREDIENTS
     };
-    
+
     const handleValidation = () => {
-        if(!ingredient.name.value) {
+        if (!ingredient.name.value) {
             notie.alert(3, 'Ingredient name is empty!!', 2.5);
-            return
+            return false
         }
-        
-        validationStatus = true;
+        return true
     };
 
-    const handleSubmit = event => {
+
+    async function handleSubmit(event) {
         event.preventDefault();
-        handleValidation();
-        const ingredientToAdd = ({
-            name: ingredient.name.value
-        });
-        if(validationStatus) {
-            dispatch(addRecipeInfoAction(ingredientToAdd, pathInfo));
-            validationStatus = false;
-            ingredient.name.value = '';
-        }
-    };
+
+        if (!handleValidation()) return;
+
+        const ingredientToAdd = ({name: ingredient.name.value});
+        dispatch(addRecipeInfoAction(ingredientToAdd, pathInfo));
+        ingredient.name.value = '';
+        notie.alert(1, 'Success!', 1.5);
+    }
 
     return (
         <div className="form-div">

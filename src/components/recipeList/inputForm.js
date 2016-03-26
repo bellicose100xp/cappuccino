@@ -1,4 +1,4 @@
-import '../utils/amazon'
+import '../utils/amazon' //credentials file...
 import React from 'react'
 import {connect} from 'react-redux'
 import {addRecipeInfoAction, modifyRecipeInfoAction} from '../../actionCreators/firebaseActions'
@@ -7,7 +7,7 @@ import Title from './formElements/inputTitle'
 import Description from './formElements/inputDescription'
 import ImageUpload from './formElements/imageUploadForm'
 import _ from 'lodash'
-import notie from 'notie'
+import notie from '../../lib/notie' //this version has no callback
 
 const mapStateToProps = state => {
     return {
@@ -18,7 +18,6 @@ const mapStateToProps = state => {
 let InputForm = ({recipeToEdit, dispatch}) => {
     let recipe = {}, imageToUpload, results;
     let modify = !_.isEmpty(recipeToEdit);
-    let validationStatus = false;
     let defaultImage = 'https://buggys3.s3-us-west-2.amazonaws.com/grey_image.png';
 
     // set timeout is to make sure the component is loaded
@@ -50,6 +49,7 @@ let InputForm = ({recipeToEdit, dispatch}) => {
             dispatch(addRecipeInfoAction(recipeToAdd));
         }
 
+        notie.alert(1, 'Success!', 1.5);
         clearFields();
     };
 
@@ -89,25 +89,38 @@ let InputForm = ({recipeToEdit, dispatch}) => {
         }
     };
 
-    async function handleValidation() {
+    const imageValidation = () => new Promise(resolve => {
+        if (!imageToUpload.files[0]) {
+            notie.confirm('You haven\'t selected an image are you sure you want to coninue?',
+                'Yes', 'Cancel', () => {
+                    resolve(true)
+                }, () => {
+                    resolve(false)
+                });
+        } else {
+            resolve(true);
+        }
+    });
 
+    const titleValidation = () => {
         if (!recipe.title.value) {
             notie.alert(3, "Recipe Title is required!", 2.5);
-            return
+            return false
         }
-
-        validationStatus = true
-    }
-
-    const handleSubmit = event => {
-        event.preventDefault();
-        handleValidation();
-
-        if (validationStatus) {
-            handleImageUpload();
-            validationStatus = false;
-        }
+        return true
     };
+
+    async function handleSubmit(event) {
+        event.preventDefault();
+
+        if (!titleValidation()) return;
+
+        let imageValidationResult = await imageValidation();
+        if (!imageValidationResult) return;
+
+        handleImageUpload();
+
+    }
 
     const handleCancelEdit = event => {
         event.preventDefault();

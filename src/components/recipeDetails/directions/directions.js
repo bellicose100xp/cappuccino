@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import convertParaToOrderedList from '../../utils/convertParaToOrderedList'
 import {modifyRecipeInfoAction} from '../../../actionCreators/firebaseActions'
 import {DIRECTIONS} from '../../../constants/constants'
+import notie from '../../../lib/notie'
 
 const Directions = ({id, directions, dispatch}) => {
         let directionsData;
@@ -16,12 +17,13 @@ const Directions = ({id, directions, dispatch}) => {
         const handleSubmit = event => {
             event.preventDefault();
             dispatch(modifyRecipeInfoAction(id, DIRECTIONS, directionsData.value));
-            console.log();
+            notie.alert(1, 'Success!', 1.5);
         };
 
         let changeHandler = () => {
             previewNode.innerHTML = convertParaToOrderedList(directionsData.value);
         };
+    
         return (
             <div className="form-div">
                 <form>
