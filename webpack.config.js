@@ -16,7 +16,8 @@ module.exports = {
     plugins: [
         new CopyWebpackPlugin([
             {from: 'src/index.html', to: 'index.html'},
-            {from: 'src/images/favicon.ico', to: 'favicon.ico'}
+            {from: 'src/images/favicon.ico', to: 'favicon.ico'},
+            {from: 'src/webmaster/google55cd5b5f78621edb.html', to:'google55cd5b5f78621edb.html'}
         ]),
         new ExtractTextPlugin("styles.css")
 
