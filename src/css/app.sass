@@ -47,7 +47,8 @@ $xhd: "only screen and (min-width : 1200px)"
 .food-item
   color: white
   font-size: 30px
-
+  text-align: center
+  padding: 1%
 
 .form-div
   width: 80%
@@ -122,10 +123,10 @@ $xhd: "only screen and (min-width : 1200px)"
 
   .my-head
     font-size: 50px
-    text-align: center
 
   .my-recipe-title
     font-size: 35px
+    text-align: center
 
   .my-recipe-description
     width: 90%
@@ -166,6 +167,13 @@ $xhd: "only screen and (min-width : 1200px)"
     min-width: 0
     max-width: none
     flex: 1 1 auto
+
+  .main-container-row
+    justify-content: space-around
+    padding-bottom: 1%
+
+  .status-nav
+    margin-right: 0
 
 @media #{$xhd}
   .my-head
@@ -226,11 +234,3 @@ $xhd: "only screen and (min-width : 1200px)"
 
   .directions ol
     padding-left: 25px
-
-@media #{$phone}
-  .main-container-row
-    justify-content: space-around
-    padding-bottom: 1%
-
-  .status-nav
-    margin-right: 0
