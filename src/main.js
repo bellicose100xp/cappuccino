@@ -8,7 +8,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {Provider} from 'react-redux'
 import store from './store/store'
-import {IndexRoute, Router, Route, Link, browserHistory} from 'react-router'
+import {IndexRoute, Router, Route, browserHistory} from 'react-router'
 
 import App from './app'
 import Homepage from './components/homepage/homepage'
