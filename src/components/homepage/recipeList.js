@@ -31,7 +31,7 @@ let calcWidthAndHeight = (w, h) => {
     let ratio = w / 320;
     let ratioRounded = Math.floor(ratio);
 
-    let horizontalPadding = (ratioRounded - 1) * 10 + 20;
+    let horizontalPadding = 20;
     let elementWidth = ( w - horizontalPadding ) / ratioRounded;
 
     return {
