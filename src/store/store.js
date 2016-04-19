@@ -7,6 +7,8 @@ import windowResizeReducer from '../reducers/windowResizeReducer'
 import recipes from '../reducers/updateRecipeReducer'
 import childItems from '../reducers/childItemReducer'
 import editRecipe from '../reducers/editRecipeReducer'
+import background from '../reducers/recipeListBackgroundReducer'
+
 
 //const loggerMiddleware = createLogger();
 
@@ -14,7 +16,8 @@ const rootReducer = combineReducers({
     windowResizeReducer,
     recipes,
     childItems,
-    editRecipe
+    editRecipe,
+    background
 });
 
 const configureStore = initialState => {

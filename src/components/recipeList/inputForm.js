@@ -11,15 +11,22 @@ import notie from '../../lib/notie' //this version has no callback
 
 const mapStateToProps = state => {
     return {
-        recipeToEdit: state.editRecipe
+        recipeToEdit: state.editRecipe,
+        background: state.background
     }
 };
 
-let InputForm = ({recipeToEdit, dispatch}) => {
+let InputForm = ({recipeToEdit, dispatch, background}) => {
     let recipe = {}, imageToUpload, results;
     let modify = !_.isEmpty(recipeToEdit);
     let defaultImage = 'https://buggys3.s3-us-west-2.amazonaws.com/grey_image.png';
-
+    let backgroundStyle = background ?
+    {backgroundColor: 'lightgrey', transition: 'background 1s ease-in-out'}
+        : {backgroundColor: 'transparent', transition: 'background 1s ease-in-out'};
+    backgroundStyle = Object.assign(backgroundStyle, {
+        paddingTop: '5px',
+        paddingBottom: '10px'
+    });
     // set timeout is to make sure the component is loaded
     setTimeout(() => {
         if (modify) {
@@ -129,30 +136,32 @@ let InputForm = ({recipeToEdit, dispatch}) => {
     };
 
     return (
-        <div className="form-div">
-            <form>
-                <Title handleRef={node => {recipe.title = node}}/>
-                <Description handleRef={node => {recipe.description = node}}/>
-                <ImageUpload
-                    handleImageRef={node => {imageToUpload = node}}
-                    handleResultRef={node => {results = node}}
-                />
+        <div className="main-container" style={backgroundStyle}>
+            <div className="form-div">
+                <form>
+                    <Title handleRef={node => {recipe.title = node}}/>
+                    <Description handleRef={node => {recipe.description = node}}/>
+                    <ImageUpload
+                        handleImageRef={node => {imageToUpload = node}}
+                        handleResultRef={node => {results = node}}
+                    />
 
-                <button
-                    className="btn btn-primary margin-right-submit"
-                    type="submit"
-                    onClick={handleSubmit}
-                > {modify ? 'Modify' : 'Submit'}
-                </button>
-
-                {modify ?
                     <button
-                        className="btn btn-default"
-                        onClick={handleCancelEdit}
-                    > Cancel
-                    </button> : null
-                }
-            </form>
+                        className="btn btn-primary margin-right-submit"
+                        type="submit"
+                        onClick={handleSubmit}
+                    > {modify ? 'Modify' : 'Submit'}
+                    </button>
+
+                    {modify ?
+                        <button
+                            className="btn btn-default"
+                            onClick={handleCancelEdit}
+                        > Cancel
+                        </button> : null
+                    }
+                </form>
+            </div>
         </div>
     )
 };
